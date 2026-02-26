@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poll Results</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(135deg,#ff9a9e,#fad0c4);
+            font-family: Arial;
+        }
+
+        .result-card {
+            margin-top: 60px;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0px 10px 30px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+<div class="result-card">
+
+    <h1>📈 {{ question.question_text }}</h1>
+
+    {% for choice in question.choice_set.all %}
+
+        <p class="fw-bold">
+            {{ choice.choice_text }}
+            ({{ choice.votes }} vote{{ choice.votes|pluralize }})
+        </p>
+
+        <div class="progress mb-3">
+            <div class="progress-bar"
+                 role="progressbar"
+                 style="width: {{ choice.votes }}%;">
+            </div>
+        </div>
+
+    {% endfor %}
+
+    <div class="text-center mt-4">
+        <a href="{% url 'polls:detail' question.id %}"
+           class="btn btn-primary">
+           Vote Again
+        </a>
+
+        <a href="{% url 'polls:index' %}"
+           class="btn btn-success">
+           Back to Polls
+        </a>
+    </div>
+
+</div>
+</div>
+
+</body>
+</html>
